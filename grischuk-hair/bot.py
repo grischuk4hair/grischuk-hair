@@ -1,5 +1,4 @@
 import os
-import asyncio
 from telegram import Update
 from telegram.ext import (
     ApplicationBuilder,
@@ -81,10 +80,12 @@ async def main() -> None:
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, forward_message))
 
     # Сбрасываем возможный webhook и чистим очередь апдейтов
-    await application.bot.delete_webhook(drop_pending_updates=True)
+    async def on_startup(app):
+    await app.bot.delete_webhook(drop_pending_updates=True)
 
-    # Запускаем long‑polling (теперь конфликтов не будет)
-    await application.run_polling()
+if __name__ == "__main__":
+    # run_polling сам создаёт и закрывает event‑loop
+    application.run_polling(on_startup=on_startup)
 
 
 if __name__ == "__main__":
