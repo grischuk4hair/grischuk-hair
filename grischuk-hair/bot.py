@@ -10,7 +10,6 @@ from telegram.ext import (
 )
 
 BOT_URL = "https://forms.gle/TtgDh1pT58nDRX7K9"
-BOTT_URL = "https://forms.gle/4bgKy3RbfHHoCe2j8"
 ADMIN_CHAT_ID = os.getenv("TELEGRAM_ADMIN_CHAT_ID")
 BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
@@ -23,7 +22,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def vopros(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text(f"❓ Задать вопрос мастеру можно тут: {BOT_URL}/index.html")
+    await update.message.reply_text("Напишите ваш вопрос:")
 
 
 async def otzyv(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -73,9 +72,12 @@ async def main() -> None:
     application = ApplicationBuilder().token(BOT_TOKEN).build()
 
     application.add_handler(CommandHandler("start", start))
-    application.add_handler(CommandHandler("zapis", zapis))
-    application.add_handler(CommandHandler("otzyv", otzyv))
     application.add_handler(CommandHandler("vopros", vopros))
+    application.add_handler(CommandHandler("otzyv", otzyv))
+    application.add_handler(CommandHandler("uslugi", uslugi))
+    application.add_handler(CommandHandler("adres", adres))
+    application.add_handler(CommandHandler("kontakty", kontakty))
+    application.add_handler(CommandHandler("master", master))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, forward_message))
 
     # Сбрасываем возможный webhook и чистим очередь апдейтов
