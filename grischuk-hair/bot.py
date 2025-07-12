@@ -22,7 +22,8 @@ async def forward_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.send_message(
         chat_id=ADMIN_CHAT_ID, 
         text=f"Вопрос от @{update.effective_user.username}:"
-{update.message.text}")
+        {update.message.text}"
+        )
         await update.message.reply_text("Ваш вопрос отправлен!")
 
 app = ApplicationBuilder().token(os.getenv("TELEGRAM_BOT_TOKEN")).build()
