@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Запись на стрижку</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Запись к парикмахеру</h1>
+  <form id="booking-form">
+    <label>Имя: <input type="text" name="name" required /></label>
+    <label>Услуга:
+      <select name="service">
+        <option>Стрижка</option>
+        <option>Окрашивание</option>
+        <option>Укладка</option>
+        <option>Бритьё</option>
+      </select>
+    </label>
+    <label>Дата и время: <input type="datetime-local" name="datetime" required /></label>
+    <label>Email/Телефон (необязательно): <input type="text" name="contact" /></label>
+    <button type="submit">Записаться</button>
+  </form>
+  <div id="result"></div>
+  <script src="script.js"></script>
+</body>
+</html>

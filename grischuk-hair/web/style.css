@@ -1,0 +1,20 @@
+body {
+  font-family: sans-serif;
+  max-width: 500px;
+  margin: 2em auto;
+  padding: 1em;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+label {
+  display: block;
+  margin-bottom: 1em;
+}
+input, select {
+  width: 100%;
+  padding: 0.5em;
+  margin-top: 0.25em;
+}
+button {
+  padding: 0.5em 1em;
+}
