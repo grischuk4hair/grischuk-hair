@@ -19,7 +19,7 @@ async def vopros(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def forward_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if str(update.effective_chat.id) != ADMIN_CHAT_ID:
-        await context.bot.send_message(chat_id=ADMIN_CHAT_ID, text=f"Вопрос от @{update.effective_user.username}:
+        await context.bot.send_message(chat_id=ADMIN_CHAT_ID, text=f"{Вопрос от @{update.effective_user.username}":
 {update.message.text}")
         await update.message.reply_text("Ваш вопрос отправлен!")
 
