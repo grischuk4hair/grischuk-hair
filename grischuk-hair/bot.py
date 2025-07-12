@@ -80,7 +80,7 @@ async def main() -> None:
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, forward_message))
 
     # Сбрасываем возможный webhook и чистим очередь апдейтов
-    async def on_startup(app):
+async def on_startup(app):
     await app.bot.delete_webhook(drop_pending_updates=True)
 
 if __name__ == "__main__":
@@ -89,4 +89,4 @@ if __name__ == "__main__":
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    application.run_polling(on_startup=on_startup)
