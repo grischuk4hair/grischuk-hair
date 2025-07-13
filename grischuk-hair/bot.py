@@ -1,16 +1,21 @@
 import os
 import asyncio
-import uvicorn
 from fastapi import FastAPI
+import uvicorn
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
-TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
-
-app = FastAPI()
+TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
+PORT = int(os.environ.get("PORT", 8000))
 
 BOTT_URL = "https://forms.gle/Ut1eXu8P8fN1nbkv5"
 BOT_URL = "https://forms.gle/1m7UdUy3u6rchxi4A"
+
+app = FastAPI()
+
+@app.get("/")
+async def root():
+    return {"status": "Bot is running"}
 
 @app.get("/health")
 async def health_check():
@@ -81,7 +86,6 @@ async def run_bot():
     await application.updater.start_polling()
 
 async def run_api():
-    port = int(os.environ.get("PORT", 8000))
     config = uvicorn.Config(app, host="0.0.0.0", port=port, log_level="info")
     server = uvicorn.Server(config)
     await server.serve()
