@@ -2,14 +2,16 @@ import os
 import asyncio
 from telegram import Update
 from telegram.ext import (
-    ApplicationBuilder, CommandHandler, MessageHandler,
-    ContextTypes, filters
+    ApplicationBuilder, CommandHandler, ContextTypes,
 )
 
 BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-ADMIN_CHAT_ID = int(os.getenv("TELEGRAM_ADMIN_CHAT_ID", "0"))
+
+# новая переменная с нужной ссылкой
+BOTT_URL = "https://forms.gle/WNs4Fk5wabFmTuhm8"
+
+# остальные ссылки/константы остались теми же
 BOT_URL = "https://forms.gle/RcHQFGpzmVvQfYsUA"
-BOTT_URL = "https://forms.gle/719kxft4FbuFod8o6"
 
 # ────── handlers ────────────────────────────────────────────────────────────
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -25,8 +27,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def vopros(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("Напишите ваш вопрос здесь: {BOTT_URL}")
-
+    await update.message.reply_text(f"Напишите ваш вопрос здесь: {BOTT_URL}")
 
 async def otzyv(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(f"✍️ Оставить отзыв: {BOT_URL}")
@@ -75,8 +76,6 @@ application.add_handler(CommandHandler("uslugi", uslugi))
 application.add_handler(CommandHandler("adres", adres))
 application.add_handler(CommandHandler("kontakty", kontakty))
 application.add_handler(CommandHandler("master", master))
-application.add_handler(
-    MessageHandler(filters.TEXT & ~filters.COMMAND, forward_message)
 )
 
 # ────── точка входа ─────────────────────────────────────────────────────────
@@ -84,10 +83,5 @@ async def cleanup_webhook():
     await application.bot.delete_webhook(drop_pending_updates=True)
 
 if __name__ == "__main__":
-    # Для совместимости с Python 3.12+
-    try:
-        asyncio.get_event_loop()
-    except RuntimeError:
-        asyncio.set_event_loop(asyncio.new_event_loop())
-
+    asyncio.run(cleanup_webhook())
     application.run_polling(drop_pending_updates=True)
