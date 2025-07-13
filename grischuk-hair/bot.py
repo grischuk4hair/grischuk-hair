@@ -1,14 +1,20 @@
 import os
+import asyncio
+from fastapi import FastAPI
 from telegram import Update
-from telegram.ext import (
-    ApplicationBuilder, CommandHandler, ContextTypes,
-)
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+import threading
 
 BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
 BOTT_URL = "https://forms.gle/WNs4Fk5wabFmTuhm8"
 BOT_URL = "https://forms.gle/RcHQFGpzmVvQfYsUA"
 
+app = FastAPI()
+
+@app.get("/health")
+async def health_check():
+    return {"status": "OK"}
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
@@ -75,8 +81,14 @@ if __name__ == "__main__":
     application.add_handler(CommandHandler("kontakty", kontakty))
     application.add_handler(CommandHandler("master", master))
 
-    # удаляем webhook (опционально, если не используешь)
-    application.bot.delete_webhook(drop_pending_updates=True)
+   def run_bot():
+    application.run_polling()
 
-    # запускаем polling — run_polling уже внутри себя управляет event loop
-    application.run_polling(drop_pending_updates=True)
+# ────── точка входа для uvicorn и polling ──────
+if __name__ == "__main__":
+    # Запускаем polling в отдельном потоке, чтобы не блокировать FastAPI
+    threading.Thread(target=run_bot, daemon=True).start()
+
+    # Запускаем FastAPI сервер
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("PORT", 8000)))
