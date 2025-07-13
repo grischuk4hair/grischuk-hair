@@ -67,20 +67,23 @@ async def master(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 # ────── создаём приложение ──────────────────────────────────────────────────
-application = ApplicationBuilder().token(BOT_TOKEN).build()
+async def main():
+    application = ApplicationBuilder().token(BOT_TOKEN).build()
 
-application.add_handler(CommandHandler("start", start))
-application.add_handler(CommandHandler("vopros", vopros))
-application.add_handler(CommandHandler("otzyv", otzyv))
-application.add_handler(CommandHandler("uslugi", uslugi))
-application.add_handler(CommandHandler("adres", adres))
-application.add_handler(CommandHandler("kontakty", kontakty))
-application.add_handler(CommandHandler("master", master))
+    application.add_handler(CommandHandler("start", start))
+    application.add_handler(CommandHandler("vopros", vopros))
+    application.add_handler(CommandHandler("otzyv", otzyv))
+    application.add_handler(CommandHandler("uslugi", uslugi))
+    application.add_handler(CommandHandler("adres", adres))
+    application.add_handler(CommandHandler("kontakty", kontakty))
+    application.add_handler(CommandHandler("master", master))
 
-# ────── точка входа ─────────────────────────────────────────────────────────
-async def cleanup_webhook():
+    # Удаляем webhook, если он есть, чтобы избежать конфликтов
     await application.bot.delete_webhook(drop_pending_updates=True)
 
+    # Запускаем polling
+    await application.run_polling(drop_pending_updates=True)
+
+
 if __name__ == "__main__":
-    asyncio.run(cleanup_webhook())
-    application.run_polling(drop_pending_updates=True)
+    asyncio.run(main())
