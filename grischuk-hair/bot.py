@@ -5,29 +5,25 @@ from fastapi import FastAPI
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
-# Получаем токен из переменных окружения
-TOKEN = os.environ.get('TOKEN')
+TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
 
 app = FastAPI()
-application = ApplicationBuilder().token(TOKEN).build()
 
 BOTT_URL = "https://forms.gle/Ut1eXu8P8fN1nbkv5"
-BOT_URL = "https://forms.gle/nm22TADvmSj9FmnL7"
+BOT_URL = "https://forms.gle/1m7UdUy3u6rchxi4A"
 
-# --- FastAPI endpoint для аптайма ---
 @app.get("/health")
 async def health_check():
     return {"status": "OK"}
 
-# --- Telegram бота хендлеры ---
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "Здравствуйте!\n"
-        "/vopros — вопрос\n"
-        "/otzyv  — отзыв\n"
-        "/adres  — адрес\n"
-        "/uslugi — услуги\n"
-        "/kontakty — контакты\n"
+        "Добрый день! Используйте команды из списка для работы со мной 😉\n"
+        "/vopros — вопрос мастеру\n"
+        "/otzyv  — отзыв о работе мастера\n"
+        "/adres  — адрес салона\n"
+        "/uslugi — список и стоимость услуг\n"
+        "/kontakty — контакты мастера\n"
         "/master — о мастере"
     )
 
@@ -40,7 +36,7 @@ async def otzyv(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def uslugi(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "✂️ Список и стоимость услуг:\n"
-        "\n• Подравнивание волос — 40 р\n"
+        "• Подравнивание волос — 40 р\n"
         "• Модельная стрижка — 50 р\n"
         "• Мужская стрижка — 35 р\n"
         "• Детская стрижка (до 12 лет) — 25 р\n"
@@ -67,7 +63,8 @@ async def master(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "Работает не по шаблону, а под ваш образ и стиль."
     )
 
-# Регистрируем хендлеры
+application = ApplicationBuilder().token(TOKEN).build()
+
 application.add_handler(CommandHandler("start", start))
 application.add_handler(CommandHandler("vopros", vopros))
 application.add_handler(CommandHandler("otzyv", otzyv))
@@ -77,14 +74,15 @@ application.add_handler(CommandHandler("kontakty", kontakty))
 application.add_handler(CommandHandler("master", master))
 
 async def run_bot():
-    # Удаляем webhook, если используем polling
+    # Удаляем webhook (await!)
     await application.bot.delete_webhook(drop_pending_updates=True)
     await application.initialize()
     await application.start()
     await application.updater.start_polling()
 
 async def run_api():
-    config = uvicorn.Config(app, host="0.0.0.0", port=8000, log_level="info")
+    port = int(os.environ.get("PORT", 8000))
+    config = uvicorn.Config(app, host="0.0.0.0", port=port, log_level="info")
     server = uvicorn.Server(config)
     await server.serve()
 
