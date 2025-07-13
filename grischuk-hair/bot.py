@@ -1,5 +1,4 @@
 import os
-import asyncio
 from telegram import Update
 from telegram.ext import (
     ApplicationBuilder, CommandHandler, ContextTypes,
@@ -7,13 +6,10 @@ from telegram.ext import (
 
 BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
-# новая переменная с нужной ссылкой
 BOTT_URL = "https://forms.gle/WNs4Fk5wabFmTuhm8"
-
-# остальные ссылки/константы остались теми же
 BOT_URL = "https://forms.gle/RcHQFGpzmVvQfYsUA"
 
-# ────── handlers ────────────────────────────────────────────────────────────
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "Здравствуйте!\n"
@@ -28,6 +24,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def vopros(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(f"Напишите ваш вопрос здесь: {BOTT_URL}")
+
 
 async def otzyv(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(f"✍️ Оставить отзыв: {BOT_URL}")
@@ -66,8 +63,8 @@ async def master(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "Работает не по шаблону, а под ваш образ и стиль."
     )
 
-# ────── создаём приложение ──────────────────────────────────────────────────
-async def main():
+
+if __name__ == "__main__":
     application = ApplicationBuilder().token(BOT_TOKEN).build()
 
     application.add_handler(CommandHandler("start", start))
@@ -78,12 +75,8 @@ async def main():
     application.add_handler(CommandHandler("kontakty", kontakty))
     application.add_handler(CommandHandler("master", master))
 
-    # Удаляем webhook, если он есть, чтобы избежать конфликтов
-    await application.bot.delete_webhook(drop_pending_updates=True)
+    # удаляем webhook (опционально, если не используешь)
+    application.bot.delete_webhook(drop_pending_updates=True)
 
-    # Запускаем polling
-    await application.run_polling(drop_pending_updates=True)
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
+    # запускаем polling — run_polling уже внутри себя управляет event loop
+    application.run_polling(drop_pending_updates=True)
