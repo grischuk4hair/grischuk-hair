@@ -76,7 +76,6 @@ application.add_handler(CommandHandler("uslugi", uslugi))
 application.add_handler(CommandHandler("adres", adres))
 application.add_handler(CommandHandler("kontakty", kontakty))
 application.add_handler(CommandHandler("master", master))
-)
 
 # ────── точка входа ─────────────────────────────────────────────────────────
 async def cleanup_webhook():
