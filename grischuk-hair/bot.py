@@ -2,14 +2,10 @@ import os
 import asyncio
 from telegram import Update
 from telegram.ext import (
-    ApplicationBuilder,
-    CommandHandler,
-    MessageHandler,
-    ContextTypes,
-    filters,
+    ApplicationBuilder, CommandHandler, MessageHandler,
+    ContextTypes, filters
 )
 
-# ────── конфигурация ────────────────────────────────────────────────────────
 BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 ADMIN_CHAT_ID = int(os.getenv("TELEGRAM_ADMIN_CHAT_ID", "0"))
 BOT_URL = "https://forms.gle/RcHQFGpzmVvQfYsUA"
@@ -17,13 +13,13 @@ BOT_URL = "https://forms.gle/RcHQFGpzmVvQfYsUA"
 # ────── handlers ────────────────────────────────────────────────────────────
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "Здравствуйте! Используйте команды:\n"
-        "/vopros  — задать вопрос\n"
-        "/otzyv   — оставить отзыв\n"
-        "/adres   — наш адрес\n"
-        "/uslugi  — услуги и цены\n"
+        "Здравствуйте!\n"
+        "/vopros — вопрос\n"
+        "/otzyv  — отзыв\n"
+        "/adres  — адрес\n"
+        "/uslugi — услуги\n"
         "/kontakty — контакты\n"
-        "/master  — о мастере"
+        "/master — о мастере"
     )
 
 
@@ -77,27 +73,27 @@ async def forward_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         await update.message.reply_text("Ваш вопрос отправлен!")
 
+# ────── создаём приложение ──────────────────────────────────────────────────
+application = ApplicationBuilder().token(BOT_TOKEN).build()
+
+application.add_handler(CommandHandler("start", start))
+application.add_handler(CommandHandler("vopros", vopros))
+application.add_handler(CommandHandler("otzyv", otzyv))
+application.add_handler(CommandHandler("uslugi", uslugi))
+application.add_handler(CommandHandler("adres", adres))
+application.add_handler(CommandHandler("kontakty", kontakty))
+application.add_handler(CommandHandler("master", master))
+application.add_handler(
+    MessageHandler(filters.TEXT & ~filters.COMMAND, forward_message)
+)
 
 # ────── точка входа ─────────────────────────────────────────────────────────
-async def main() -> None:
-    application = ApplicationBuilder().token(BOT_TOKEN).build()
-
-    application.add_handler(CommandHandler("start", start))
-    application.add_handler(CommandHandler("vopros", vopros))
-    application.add_handler(CommandHandler("otzyv", otzyv))
-    application.add_handler(CommandHandler("uslugi", uslugi))
-    application.add_handler(CommandHandler("adres", adres))
-    application.add_handler(CommandHandler("kontakty", kontakty))
-    application.add_handler(CommandHandler("master", master))
-    application.add_handler(
-        MessageHandler(filters.TEXT & ~filters.COMMAND, forward_message)
-    )
-
-    # удаляем возможный webhook и чистим очередь, чтобы не было Conflict
+async def cleanup_webhook():
     await application.bot.delete_webhook(drop_pending_updates=True)
 
-    # запускаем long‑polling
-    await application.run_polling()
-
 if __name__ == "__main__":
-    asyncio.run(main())
+    # 1) Сбросить webhook и очередь
+    asyncio.run(cleanup_webhook())
+
+    # 2) Запустить polling. run_polling САМ создаёт/закрывает event‑loop
+    application.run_polling(drop_pending_updates=True)
