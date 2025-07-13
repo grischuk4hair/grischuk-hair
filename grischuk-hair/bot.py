@@ -9,6 +9,7 @@ from telegram.ext import (
 BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 ADMIN_CHAT_ID = int(os.getenv("TELEGRAM_ADMIN_CHAT_ID", "0"))
 BOT_URL = "https://forms.gle/RcHQFGpzmVvQfYsUA"
+BOTT_URL = "https://forms.gle/719kxft4FbuFod8o6"
 
 # ────── handlers ────────────────────────────────────────────────────────────
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -24,7 +25,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def vopros(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("Напишите ваш вопрос:")
+    await update.message.reply_text("Напишите ваш вопрос здесь: {BOTT_URL}")
 
 
 async def otzyv(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -55,23 +56,14 @@ async def adres(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def kontakty(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("☎️ +375 (29) 695‑72‑22")
+    await update.message.reply_text("☎️ Телефон / Telegram / Viber: +375 (29) 695‑72‑22")
 
 
 async def master(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "💇‍♀️ Екатерина Грищук — парикмахер‑универсал с 3+ годами опыта. "
+        "💇‍♀️ Екатерина Грищук — парикмахер‑универсал с обширным опытом работы! "
         "Работает не по шаблону, а под ваш образ и стиль."
     )
-
-
-async def forward_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if update.effective_chat.id != ADMIN_CHAT_ID:
-        await context.bot.send_message(
-            chat_id=ADMIN_CHAT_ID,
-            text=f"Вопрос от @{update.effective_user.username}: {update.message.text}",
-        )
-        await update.message.reply_text("Ваш вопрос отправлен!")
 
 # ────── создаём приложение ──────────────────────────────────────────────────
 application = ApplicationBuilder().token(BOT_TOKEN).build()
