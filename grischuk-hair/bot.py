@@ -4,6 +4,8 @@ from telegram.ext import (
     ApplicationBuilder, CommandHandler, ContextTypes,
 )
 
+from fastapi import FastAPI
+
 BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
 BOTT_URL = "https://forms.gle/Ut1eXu8P8fN1nbkv5"
