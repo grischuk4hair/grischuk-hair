@@ -92,8 +92,10 @@ async def cleanup_webhook():
     await application.bot.delete_webhook(drop_pending_updates=True)
 
 if __name__ == "__main__":
-    # 1) Сбросить webhook и очередь
-    asyncio.run(cleanup_webhook())
+    # Для совместимости с Python 3.12+
+    try:
+        asyncio.get_event_loop()
+    except RuntimeError:
+        asyncio.set_event_loop(asyncio.new_event_loop())
 
-    # 2) Запустить polling. run_polling САМ создаёт/закрывает event‑loop
     application.run_polling(drop_pending_updates=True)
