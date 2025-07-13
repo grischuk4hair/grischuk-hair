@@ -65,9 +65,7 @@ application.add_handler(CommandHandler("kontakty", kontakty))
 application.add_handler(CommandHandler("master", master))
 application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, forward_message))
 
-# сбрасываем возможный webhook перед стартом polling
-import asyncio
-
 if __name__ == "__main__":
-    asyncio.run(application.bot.delete_webhook(drop_pending_updates=True))
+    # run_polling сам создаёт event‑loop, сбрасывает webhook и, если попросить,
+    # очищает очередь старых апдейтов – никаких asyncio.run() не нужно.
     application.run_polling(drop_pending_updates=True)
