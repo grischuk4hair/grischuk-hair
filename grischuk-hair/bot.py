@@ -10,6 +10,7 @@ PORT = int(os.environ.get("PORT", 8000))
 
 BOTT_URL = "https://forms.gle/Ut1eXu8P8fN1nbkv5"
 BOT_URL = "https://forms.gle/1m7UdUy3u6rchxi4A"
+WEBSITE_URL = "https://grischukhair.setmore.com/"
 
 app = FastAPI()
 
@@ -24,6 +25,7 @@ async def health_check():
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "Добрый день! Используйте команды из списка для работы со мной 😉\n"
+        "/zapis – запись на услуги\n"
         "/vopros — вопрос мастеру\n"
         "/otzyv  — отзыв о работе мастера\n"
         "/adres  — адрес салона\n"
@@ -32,8 +34,11 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "/master — о мастере"
     )
 
+async def zapis(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(f"Вы можете записаться на услуги по этой ссылке: {WEBSITE_URL}")
+
 async def vopros(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text(f"Напишите ваш вопрос здесь: {BOTT_URL}")
+    await update.message.reply_text(f"Задайте ваш вопрос здесь, и мастер свяжется с вами: {BOTT_URL}")
 
 async def otzyv(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(f"✍️ Оставить отзыв: {BOT_URL}")
@@ -41,7 +46,7 @@ async def otzyv(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def uslugi(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "✂️ Список и стоимость услуг:\n"
-        "• Подравнивание волос — 40 р\n"
+        "\n• Подравнивание волос — 40 р\n"
         "• Модельная стрижка — 50 р\n"
         "• Мужская стрижка — 35 р\n"
         "• Детская стрижка (до 12 лет) — 25 р\n"
@@ -64,13 +69,14 @@ async def kontakty(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def master(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "💇‍♀️ Екатерина Грищук — парикмахер‑универсал с обширным опытом работы! "
-        "Работает не по шаблону, а под ваш образ и стиль."
+        "💇‍♀️ Екатерина Грищук — парикмахер‑универсал с обширным опытом работы!\n"
+        "\nРаботает не по шаблону, а под ваш образ и стиль."
     )
 
 application = ApplicationBuilder().token(TOKEN).build()
 
 application.add_handler(CommandHandler("start", start))
+application.add_handler(CommandHandler("zapis", zapis))
 application.add_handler(CommandHandler("vopros", vopros))
 application.add_handler(CommandHandler("otzyv", otzyv))
 application.add_handler(CommandHandler("uslugi", uslugi))
