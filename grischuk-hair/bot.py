@@ -44,43 +44,22 @@ async def otzyv(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(f"✍️ Оставить отзыв можно на странице записи в разделе Отзывы: {WEBSITE_URL}")
 
 async def uslugi(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    links = {
-        "Подравнивание волос": "https://grischukhair.setmore.com/services/8b5e91f2-442a-4fa9-ac0b-8a9c36455718",
-        "Модельная стрижка": "https://grischukhair.setmore.com/services/e4284bc6-e71d-4471-b65b-64937a4f847b",
-        "Мужская модельная стрижка": "https://grischukhair.setmore.com/services/f1d75d97-2426-4276-a2f4-0e2ed9303410",
-        "Детская стрижка (до 12 лет)": "https://grischukhair.setmore.com/services/4678f44a-ad78-4043-8730-43f7163d370b",
-        "Окрашивание корней полностью в один тон": "https://grischukhair.setmore.com/services/779eee3f-a487-45be-96cd-4b7d6c9f00d5",
-        "Окрашивание волос полностью в один тон": "https://grischukhair.setmore.com/services/d1c9544b-64b2-43ea-9d28-bf7eb0269152",
-        "Окрашивание волос один тон + стрижка (комплекс)": "https://grischukhair.setmore.com/services/1f2e831e-70e4-435f-a043-2afb4848d428",
-        "Контуринг (коррекция AirTouch, тонировка включена)": "https://grischukhair.setmore.com/services/41c9ae3b-a8d1-4a7e-8ed2-a69c48b1a68c",
-        "AirTouch / сложные техники (тонировка включена)": "https://grischukhair.setmore.com/services/2087ade8-b92f-43a0-beef-366715ef52ec",
-        "Мелирование (тонировка включена)": "https://grischukhair.setmore.com/services/91d61b14-a4cf-4a78-bade-1b46305af860",
-    }
+    text = (
+        "✂️ <b>Список и стоимость услуг, а также ссылки на запись:</b>\n\n"
+        "• <a href='https://grischukhair.setmore.com/services/8b5e91f2-442a-4fa9-ac0b-8a9c36455718'>Подравнивание волос</a> — 40р\n"
+        "• <a href='https://grischukhair.setmore.com/services/e4284bc6-e71d-4471-b65b-64937a4f847b'>Модельная стрижка</a> — 50р\n"
+        "• <a href='https://grischukhair.setmore.com/services/f1d75d97-2426-4276-a2f4-0e2ed9303410'>Мужская модельная стрижка</a> — 35р\n"
+        "• <a href='https://grischukhair.setmore.com/services/4678f44a-ad78-4043-8730-43f7163d370b'>Детская стрижка (до 12 лет)</a> — 25р\n"
+        "• <a href='https://grischukhair.setmore.com/services/779eee3f-a487-45be-96cd-4b7d6c9f00d5'>Окрашивание корней полностью в один тон</a> — 120р\n"
+        "• <a href='https://grischukhair.setmore.com/services/d1c9544b-64b2-43ea-9d28-bf7eb0269152'>Окрашивание волос полностью в один тон</a> — 140р\n"
+        "• <a href='https://grischukhair.setmore.com/services/1f2e831e-70e4-435f-a043-2afb4848d428'>Окрашивание волос один тон + стрижка (комплекс)</a> — 160р\n"
+        "• <a href='https://grischukhair.setmore.com/services/41c9ae3b-a8d1-4a7e-8ed2-a69c48b1a68c'>Контуринг (коррекция AirTouch, тонировка включена)</a> — 200-250р\n"
+        "• <a href='https://grischukhair.setmore.com/services/2087ade8-b92f-43a0-beef-366715ef52ec'>AirTouch / сложные техники (тонировка включена)</a> — 320-380р\n"
+        "• <a href='https://grischukhair.setmore.com/services/91d61b14-a4cf-4a78-bade-1b46305af860'>Мелирование (тонировка включена)</a> — 180-250р\n\n"
+        "\nТочная стоимость зависит от длины и густоты волос."
+    )
 
-    prices = {
-        "Подравнивание волос": "40 р",
-        "Модельная стрижка": "50 р",
-        "Мужская модельная стрижка": "35 р",
-        "Детская стрижка (до 12 лет)": "25 р",
-        "Окрашивание корней полностью в один тон": "120 р",
-        "Окрашивание волос полностью в один тон": "140 р",
-        "Окрашивание волос один тон + стрижка (комплекс)": "160 р",
-        "Контуринг (коррекция AirTouch, тонировка включена)": "200–250 р",
-        "AirTouch / сложные техники (тонировка включена)": "320–380 р",
-        "Мелирование (тонировка включена)": "180–250 р",
-    }
-
-    lines = ["✂️ <b>Список и стоимость услуг:</b>", ""]  # первая строка + пустая
-
-    for name, url in links.items():
-        price = prices.get(name, "")
-        lines.append(f"• <a href=\"{url}\">{name}</a> — {price}")
-
-    lines.append("") 
-    lines.append("<i>Точная стоимость зависит от длины и густоты волос.</i>")
-
-    text = "<br>".join(lines)
-    await update.message.reply_text(text, parse_mode="HTML")
+    await update.message.reply_text(text, parse_mode="HTML", disable_web_page_preview=True)
 
 async def adres(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
