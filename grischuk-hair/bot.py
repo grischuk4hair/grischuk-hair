@@ -49,13 +49,15 @@ async def uslugi(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "• <a href='https://grischukhair.setmore.com/services/8b5e91f2-442a-4fa9-ac0b-8a9c36455718'>Подравнивание волос</a> — 40р\n"
         "• <a href='https://grischukhair.setmore.com/services/e4284bc6-e71d-4471-b65b-64937a4f847b'>Модельная стрижка</a> — 50р\n"
         "• <a href='https://grischukhair.setmore.com/services/f1d75d97-2426-4276-a2f4-0e2ed9303410'>Мужская модельная стрижка</a> — 35р\n"
+        "• <a href='https://grischukhair.setmore.com/services/7e638071-e448-48a4-b19a-ac14b5ab1d76'>Оформление бороды</a> — 20р\n"
+        "• <a href='https://grischukhair.setmore.com/services/db631a27-e91c-4101-b78c-77b59fc1eddf'>Стрижка челки</a> — 20р\n"
         "• <a href='https://grischukhair.setmore.com/services/4678f44a-ad78-4043-8730-43f7163d370b'>Детская стрижка (до 12 лет)</a> — 25р\n"
         "• <a href='https://grischukhair.setmore.com/services/779eee3f-a487-45be-96cd-4b7d6c9f00d5'>Окрашивание корней полностью в один тон</a> — 120р\n"
         "• <a href='https://grischukhair.setmore.com/services/d1c9544b-64b2-43ea-9d28-bf7eb0269152'>Окрашивание волос полностью в один тон</a> — 140р\n"
         "• <a href='https://grischukhair.setmore.com/services/1f2e831e-70e4-435f-a043-2afb4848d428'>Окрашивание волос один тон + стрижка (комплекс)</a> — 160р\n"
         "• <a href='https://grischukhair.setmore.com/services/41c9ae3b-a8d1-4a7e-8ed2-a69c48b1a68c'>Контуринг (коррекция AirTouch, тонировка включена)</a> — 200-250р\n"
         "• <a href='https://grischukhair.setmore.com/services/2087ade8-b92f-43a0-beef-366715ef52ec'>AirTouch / сложные техники (тонировка включена)</a> — 320-380р\n"
-        "• <a href='https://grischukhair.setmore.com/services/91d61b14-a4cf-4a78-bade-1b46305af860'>Мелирование (тонировка включена)</a> — 180-250р\n\n"
+        "• <a href='https://grischukhair.setmore.com/services/2087ade8-b92f-43a0-beef-366715ef52ec'>AirTouch / сложные техники (тонировка включена)</a> — 320-380р\n"
         "Точная стоимость зависит от длины и густоты волос."
     )
 
