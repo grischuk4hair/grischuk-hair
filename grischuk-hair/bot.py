@@ -56,8 +56,7 @@ async def uslugi(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "• <a href='https://grischukhair.setmore.com/services/d1c9544b-64b2-43ea-9d28-bf7eb0269152'>Окрашивание волос полностью в один тон</a> — 140р\n"
         "• <a href='https://grischukhair.setmore.com/services/1f2e831e-70e4-435f-a043-2afb4848d428'>Окрашивание волос один тон + стрижка (комплекс)</a> — 160р\n"
         "• <a href='https://grischukhair.setmore.com/services/41c9ae3b-a8d1-4a7e-8ed2-a69c48b1a68c'>Контуринг (коррекция AirTouch, тонировка включена)</a> — 200-250р\n"
-        "• <a href='https://grischukhair.setmore.com/services/2087ade8-b92f-43a0-beef-366715ef52ec'>AirTouch / сложные техники (тонировка включена)</a> — 320-380р\n"
-        "• <a href='https://grischukhair.setmore.com/services/2087ade8-b92f-43a0-beef-366715ef52ec'>AirTouch / сложные техники (тонировка включена)</a> — 320-380р\n"
+        "• <a href='https://grischukhair.setmore.com/services/2087ade8-b92f-43a0-beef-366715ef52ec'>AirTouch / сложные техники (тонировка включена)</a> — 320-380р\n\n"
         "Точная стоимость зависит от длины и густоты волос."
     )
 
